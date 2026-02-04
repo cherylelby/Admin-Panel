@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Admin Panel</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <!-- Left Side -->
+        <div class="login-left">
+            <i class="fas fa-shield-alt"></i>
+            <h1>Admin Panel</h1>
+            <p>Management System untuk mengelola user dan produk dengan mudah</p>
+        </div>
+
+        <!-- Right Side -->
+        <div class="login-right">
+            <div class="login-header">
+                <h2>Selamat Datang!</h2>
+                <p>Silakan login untuk melanjutkan</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Masukkan username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Masukkan password" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Login Sebagai</label>
+                    <select id="role" required>
+                        <option value="">Pilih Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+            </form>
+
+            <div class="login-info">
+                <p><strong>Demo Account:</strong></p>
+                <p>Admin - Username: <code>admin</code> Password: <code>admin123</code></p>
+                <p>User - Username: <code>user</code> Password: <code>user123</code></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo credentials
+        const credentials = {
+            admin: { username: 'admin', password: 'admin123', redirect: 'dashboard.html' },
+            user: { username: 'user', password: 'user123', redirect: 'user-dashboard.html' }
+        };
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            // Validate credentials
+            if (!role) {
+                alert('Silakan pilih role!');
+                return;
+            }
+
+            const validCred = credentials[role];
+            
+            if (username === validCred.username && password === validCred.password) {
+                // Save role to localStorage
+                localStorage.setItem('userRole', role);
+                localStorage.setItem('username', username);
+                
+                // Redirect to appropriate page
+                window.location.href = validCred.redirect;
+            } else {
+                alert('Username atau password salah!');
+            }
+        });
+    </script>
+</body>
+</html>
